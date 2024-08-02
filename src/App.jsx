@@ -8,10 +8,12 @@ import Order from './features/order/Order';
 
 import { RouterProvider } from 'react-router-dom';
 import AppLayout from './ui/AppLayout';
+import Error from './ui/Error';
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
+    errorElement: <Error />,
     children: [
       {
         path: '/fast-react-pizza',
@@ -21,6 +23,7 @@ const router = createBrowserRouter([
         path: '/fast-react-pizza/menu',
         element: <Menu />,
         loader: menuLoader,
+        errorElement: <Error />,
       },
       {
         path: '/fast-react-pizza/cart',
