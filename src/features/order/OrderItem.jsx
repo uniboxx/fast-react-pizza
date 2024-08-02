@@ -1,3 +1,5 @@
+import { formatCurrency } from '../../utilities/helpers.js';
+
 function OrderItem({ item, isLoadingIngredients, ingredients }) {
   const { quantity, name, totalPrice } = item;
 
