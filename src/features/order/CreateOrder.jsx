@@ -1,12 +1,14 @@
+/* eslint-disable react/prop-types */
 import { Form, redirect } from 'react-router-dom';
 import { createOrder } from '../../services/apiRestaurant';
 import { useNavigation } from 'react-router-dom';
 import { useActionData } from 'react-router-dom';
+import Button from '../../ui/Button';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = str =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-    str
+    str,
   );
 
 const fakeCart = [
@@ -47,43 +49,34 @@ function CreateOrder() {
       <h2>Ready to order? Let's go!</h2>
 
       {/* <Form method='POST' action='/order/new'> */}
-      <Form method='POST'>
-        <div>
-          <label>First Name</label>
-          <input type='text' name='customer' required />
-        </div>
+      <Form method="POST">
+        <FormInput name="customer" labelText="First Name" />
 
         <div>
-          <label>Phone number</label>
-          <div>
-            <input type='tel' name='phone' required />
-          </div>
+          <FormInput name="phone" labelText="Phone number" />
+
           {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
 
-        <div>
-          <label>Address</label>
-          <div>
-            <input type='text' name='address' required />
-          </div>
-        </div>
+        <FormInput name="address" labelText="Address" />
 
         <div>
           <input
-            type='checkbox'
-            name='priority'
-            id='priority'
+            className="h-6 w-6 accent-yellow-400 focus:outline-none focus:ring focus:ring-yellow-400 focus:ring-offset-2"
+            type="checkbox"
+            name="priority"
+            id="priority"
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor='priority'>Want to yo give your order priority?</label>
+          <label htmlFor="priority">Want to yo give your order priority?</label>
         </div>
 
         <div>
-          <input type='hidden' name='cart' value={JSON.stringify(cart)} />
-          <button disabled={isSubmitting}>
+          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+          <Button disabled={isSubmitting}>
             {isSubmitting ? 'Placing order...' : `Order now`}
-          </button>
+          </Button>
         </div>
       </Form>
     </div>
@@ -103,8 +96,6 @@ export async function action({ request }) {
   };
   // console.log(order);
 
-  const newOrder = await createOrder(order);
-
   const errors = {};
   if (!isValidPhone(order.phone))
     errors.phone =
@@ -113,7 +104,20 @@ export async function action({ request }) {
   if (Object.keys(errors).length > 0) return errors;
 
   //- if everything is ok, create the new order and redirect
-  return redirect(`/order/${newOrder.id}`);
+
+  // const newOrder = await createOrder(order);
+
+  // return redirect(`/order/${newOrder.id}`);
+  return null;
+}
+
+function FormInput({ labelText, name }) {
+  return (
+    <div>
+      <label>{labelText}</label>
+      <input className="input" type="text" name={name} required />
+    </div>
+  );
 }
 
 export default CreateOrder;
