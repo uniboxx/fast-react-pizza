@@ -57,7 +57,7 @@ function Order() {
     estimatedDelivery,
     cart,
   } = order;
-  // console.log(cart);
+  // console.log(order);
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (

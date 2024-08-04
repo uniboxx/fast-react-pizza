@@ -50,7 +50,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: '/fast-react-pizza' }
+  { basename: '/fast-react-pizza/' },
 );
 
 function App() {
